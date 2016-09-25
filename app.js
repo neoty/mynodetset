@@ -1,12 +1,16 @@
+process.env.NODE_ENV = ( process.env.NODE_ENV && ( process.env.NODE_ENV ).trim().toLowerCase() == 'production' ) ? 'production' : 'development';
+console.log(process.env.NODE_ENV);
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var redis = require('redis');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var os = require('os');
 
 var app = express();
 
@@ -24,8 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
